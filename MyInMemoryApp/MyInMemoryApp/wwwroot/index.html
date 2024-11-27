@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyInMemoryApp</title>
+    <script>
+        // Функция для получения списка задач
+        async function fetchTodos() {
+            const response = await fetch('http://localhost:5109/todos');
+            const todos = await response.json();
+            document.getElementById('todosList').innerHTML = JSON.stringify(todos, null, 2);
+        }
+
+        // Функция для добавления новой задачи
+        async function addTodo() {
+            const todoTitle = document.getElementById('todoTitle').value;
+            await fetch('http://localhost:5109/todos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title: todoTitle, isComplete: false }),
+            });
+            fetchTodos(); // Обновить список после добавления
+        }
+
+        // Функция для получения логов
+        async function fetchLogs() {
+            const response = await fetch('http://localhost:5109/logs');
+            const logs = await response.json();
+            document.getElementById('logsList').innerHTML = JSON.stringify(logs, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h1>MyInMemoryApp</h1>
+
+    <section>
+        <h2>Todos</h2>
+        <input type="text" id="todoTitle" placeholder="Enter new todo">
+        <button onclick="addTodo()">Add Todo</button>
+        <button onclick="fetchTodos()">Fetch Todos</button>
+        <pre id="todosList"></pre>
+    </section>
+
+    <section>
+        <h2>Logs</h2>
+        <button onclick="fetchLogs()">Fetch Logs</button>
+        <pre id="logsList"></pre>
+    </section>
+</body>
+</html>
+    

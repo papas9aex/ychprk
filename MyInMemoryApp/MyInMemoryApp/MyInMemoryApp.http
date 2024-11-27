@@ -1,0 +1,11 @@
+@MyInMemoryApp_HostAddress = http://localhost:5109
+
+GET {{MyInMemoryApp_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{MyInMemoryApp_HostAddress}}/todos/1
+Accept: application/json
+
+###
